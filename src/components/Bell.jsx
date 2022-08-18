@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
-import "./App.css";
+import "../App.css";
 import Modal from "./Modal";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/exports";
-import { deleteNotification, addNotification } from "./notificationsSlice";
+import {
+  deleteNotification,
+  addNotification,
+} from "../features/notificationsSlice";
 import { nanoid } from "nanoid";
 
 import React from "react";

@@ -1,4 +1,4 @@
-import Bell from "./Bell";
+import Bell from "./components/Bell";
 
 function App() {
   return (
