@@ -4,32 +4,34 @@ import Modal from "./Modal";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/exports";
 import { deleteNotification, addNotification } from "./notificationsSlice";
+import { nanoid } from "nanoid";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [bellClicked, setBellClicked] = useState(false);
   const dispatch = useDispatch();
   const notifications = useSelector((state) => state.notificationReducer);
 
-  // for (let i = 0; i < 8; i++) {
-  //   setTimeout(
-  //     () =>
-  //       dispatch(
-  //         addNotification({
-  //           id: i + 2,
-  //           header: "foo" + i,
-  //           text: "bar" + i,
-  //         })
-  //       ),
-  //     900
-  //   );
-  // }
+  useEffect(() => {
+    console.log(notifications);
+  }, []);
 
-  // useEffect(() => {
-  //   console.log(notifications);
-  //   }
-  // }, [notifications]);
+  if (notifications.length < 10 && bellClicked === false) {
+    if (notifications.length === 9) {
+      setBellClicked(true);
+    }
 
+    setTimeout(() => {
+      const id = notifications.length + 1;
+      dispatch(
+        addNotification({
+          id: id,
+          header: "foo" + id,
+          text: "bar" + id,
+        })
+      );
+    }, 1000);
+  }
   return (
     <div className="App">
       <header>
@@ -45,7 +47,7 @@ function App() {
       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
         <section>
           {notifications.map((element) => (
-            <div className="notification" key={element.id}>
+            <div className="notification" key={nanoid()}>
               <h1 className="notification-header">{element.header}</h1>
               <p className="notification-text">{element.text}</p>
               <button
