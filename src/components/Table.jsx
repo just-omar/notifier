@@ -1,0 +1,35 @@
+import React, { useMemo } from "react";
+import { useTable } from "react-table";
+import MOCK_DATA from "../../public/MOCK_DATA.json";
+import { COLUMNS } from "./columns";
+
+const Table = () => {
+  const memoizedColumns = useMemo(() => COLUMNS, []);
+  const memoizedData = useMemo(() => MOCK_DATA, []);
+
+  const tableInstance = useTable({
+    columns: memoizedColumns,
+    data: memoizedData,
+  });
+
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    tableInstance;
+  return (
+    <table {...getTableProps()}>
+      <thead>
+        {headerGroups.map((hGroup) => (
+          <tr {...hGroup.getHeaderGroupProps()}>
+            <th></th>
+          </tr>
+        ))}
+      </thead>
+      <tbody {...getTableBodyProps()}>
+        <tr>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  );
+};
+
+export default Table;
