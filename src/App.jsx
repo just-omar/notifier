@@ -14,24 +14,24 @@ function App() {
 
   useEffect(() => {
     console.log(notifications);
-  }, []);
+    if (notifications.length < 10 && bellClicked === false) {
+      if (notifications.length === 9) {
+        setBellClicked(true);
+      }
 
-  if (notifications.length < 10 && bellClicked === false) {
-    if (notifications.length === 9) {
-      setBellClicked(true);
+      setTimeout(() => {
+        const id = notifications.length + 1;
+        dispatch(
+          addNotification({
+            id: id,
+            header: "foo" + id,
+            text: "bar" + id,
+          })
+        );
+      }, 1000);
     }
+  }, [notifications]);
 
-    setTimeout(() => {
-      const id = notifications.length + 1;
-      dispatch(
-        addNotification({
-          id: id,
-          header: "foo" + id,
-          text: "bar" + id,
-        })
-      );
-    }, 1000);
-  }
   return (
     <div className="App">
       <header>
@@ -51,6 +51,7 @@ function App() {
               <h1 className="notification-header">{element.header}</h1>
               <p className="notification-text">{element.text}</p>
               <button
+                disabled={!bellClicked}
                 className="notification-delete"
                 onClick={() => dispatch(deleteNotification({ id: element.id }))}
               >
