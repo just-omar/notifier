@@ -1,25 +1,24 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import Modal from "./Modal";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux/es/exports";
+import { deleteNotification } from "./notificationsSlice";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [notifications, setNotifications] = useState([]);
+  const dispatch = useDispatch();
+  const notifs = useSelector((state) => state.notificationReducer);
 
   useEffect(() => {
-    console.log("foo");
-    fetch("/db.json")
-      .then((resp) => resp.json())
-      .then((data) => setNotifications(data));
-  }, []);
-
-  console.log(notifications);
+    console.log(notifs);
+  }, [notifs]);
 
   return (
     <div className="App">
       <header>
-        <div className="counter">{notifications.length}</div>
+        <div className="counter">{notifs.length}</div>
         <button
           onClick={() => setIsOpen((prevVal) => !prevVal)}
           className="bell-btn"
@@ -30,11 +29,16 @@ function App() {
 
       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
         <section>
-          {notifications.map((element) => (
+          {notifs.map((element) => (
             <div className="notification" key={element.id}>
               <h1 className="notification-header">{element.header}</h1>
               <p className="notification-text">{element.text}</p>
-              <button className="notification-delete">Удалить</button>
+              <button
+                className="notification-delete"
+                onClick={() => dispatch(deleteNotification({ id: element.id }))}
+              >
+                Удалить
+              </button>
             </div>
           ))}
         </section>
