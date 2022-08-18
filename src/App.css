@@ -4,6 +4,32 @@
   margin: 0;
 }
 
+body {
+  background-color: antiquewhite;
+  font-size: x-large;
+}
 .App {
   text-align: center;
+}
+
+header {
+  background-color: #282c34;
+  position: relative;
+  z-index: 1;
+  color: white;
+}
+
+.notification {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.notification-header {
+  margin-right: 1rem;
+}
+
+.notification-text {
+  margin-right: 1rem;
 }
